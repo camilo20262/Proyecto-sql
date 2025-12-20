@@ -56,12 +56,44 @@ FROM orders
 WHERE shippedDate IS NULL;
 
 
-#¿Qué empleados no tienen un jefe asignado?
+#10 ¿Qué empleados no tienen un jefe asignado?
 SELECT employeeID,
        employeeName,
        reportsTo
 FROM employees
 WHERE reportsTo IS NULL;
+
+
+#11.¿Cuántos pedidos ha gestionado cada empleado?
+
+select e.employeeName,count(orderID) as pedidos
+from employees as e
+left join orders as o
+on e.employeeID= o.employeeID
+group by 1
+order by pedidos desc
+
+#12¿Cuánto dinero se ha facturado por cada pedido?
+SELECT o.orderID,
+       ROUND(
+         SUM(od.unitPrice * od.quantity * (1 - od.discount)),
+         2
+       ) AS total_facturado
+FROM orders o
+LEFT JOIN order_details od
+  ON o.orderID = od.orderID
+GROUP BY o.orderID;
+
+#13¿Cuáles son los productos más vendidos en términos de cantidad?
+
+SELECT p.productName,sum(o.quantity) as 'cantidad vendida'
+FROM products AS p
+JOIN order_details AS o
+ON p.productID= o.productID
+join orders as ord
+group by p.productName 
+order by  sum(o.quantity) desc
+
 
 
 
