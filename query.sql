@@ -94,6 +94,15 @@ join orders as ord
 group by p.productName 
 order by  sum(o.quantity) desc
 
+#14Qué clientes han realizado más pedidos?
+SELECT c.company_name,
+       COUNT(o.orderID) AS cantidad_pedidos
+FROM customers c
+JOIN orders o
+  ON c.customer_id = o.customerID
+GROUP BY c.company_name
+ORDER BY cantidad_pedidos DESC;
+
 
 
 
