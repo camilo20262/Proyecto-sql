@@ -1,115 +1,56 @@
-#1.¿Cuántos clientes tiene la empresa registrados actualmente?
-SELECT COUNT(*) AS total_clientes
-FROM customers;
+#1. Lista de Clientes
+#Obtén el nombre y ciudad de todos los clientes de la empresa, ordenados alfabéticamente por nombre.
 
-#2¿Qué productos vende la empresa y cuál es el precio de cada uno?
+select contact_name,city
+from customers 
+order by 1 asc
 
-SELECT productName, unitPrice
-FROM products;
+#2. Productos Disponibles
+#¿Cuáles son los nombres de todos los productos que están activos (no discontinuados)?
 
+select productName
+from products 
+where discontinued = 0
 
-#3.Cuáles son las categorías de productos que maneja la empresa?
+#3. Empleados por País
+#¿En qué ciudades trabajan nuestros empleados? Lista las ciudades únicas sin repeticiones.
 
-SELECT categoryID, categoryName
-FROM categories;
+select distinct city
+from employees 
 
+#4. Rango de Precios
+#¿Cuál es el precio más alto y más bajo de nuestros productos?
 
-#4.¿Qué empleados trabajan actualmente en la compañía y en qué país están ubicados?
-SELECT employeeName, country
-FROM employees;
+select max(unitPrice),min(unitPrice)
+from products 
 
+#5. Órdenes Recientes
+#¿Cuántas órdenes se realizaron en total? ¿Cuál fue la orden más reciente?
 
-#5.¿Cuántos pedidos se han realizado en total?
-SELECT COUNT(*) AS total_pedidos
-FROM orders;
+select count(orderID),max(orderDate)
+from orders 
 
+#6. Categorías de Productos
+#¿Cuántas categorías de productos diferentes tenemos?
 
-#6.¿Qué empresas de transporte utiliza Northwind para enviar sus pedidos?
-SELECT shipperID, companyName
-FROM shippers;
+SELECT COUNT(*) AS total_categorias
+FROM categories
 
+#7. Información de un Cliente Específico
+#Obtén toda la información de contacto del cliente "ALFKI".
 
-#7.¿Qué clientes pertenecen a un país específico (por ejemplo, Alemania o Brasil)?
+select *
+from customers
+where customer_id ="ALFKI"
 
-SELECT customer_id,
-       company_name,
-       country
-FROM customers
-WHERE country = 'Germany';
+#8. Productos de una Categoría
+#¿Cuáles son los productos en la categoría "Beverages"?
 
-
-#8.¿Qué productos están marcados como descontinuados?
-SELECT productID,
-       productName,
-       discontinued
-FROM products
-WHERE discontinued = 1;
-
-
-
-
-#9¿Qué pedidos aún no han sido enviados?
-SELECT orderID,
-       orderDate,
-       shippedDate
-FROM orders
-WHERE shippedDate IS NULL;
-
-
-#10 ¿Qué empleados no tienen un jefe asignado?
-SELECT employeeID,
-       employeeName,
-       reportsTo
-FROM employees
-WHERE reportsTo IS NULL;
-
-
-#11.¿Cuántos pedidos ha gestionado cada empleado?
-
-select e.employeeName,count(orderID) as pedidos
-from employees as e
-left join orders as o
-on e.employeeID= o.employeeID
-group by 1
-order by pedidos desc
-
-#12¿Cuánto dinero se ha facturado por cada pedido?
-SELECT o.orderID,
-       ROUND(
-         SUM(od.unitPrice * od.quantity * (1 - od.discount)),
-         2
-       ) AS total_facturado
-FROM orders o
-LEFT JOIN order_details od
-  ON o.orderID = od.orderID
-GROUP BY o.orderID;
-
-#13¿Cuáles son los productos más vendidos en términos de cantidad?
-
-SELECT p.productName,sum(o.quantity) as 'cantidad vendida'
-FROM products AS p
-JOIN order_details AS o
-ON p.productID= o.productID
-join orders as ord
-group by p.productName 
-order by  sum(o.quantity) desc
-
-#14Qué clientes han realizado más pedidos?
-SELECT c.company_name,
-       COUNT(o.orderID) AS cantidad_pedidos
-FROM customers c
-JOIN orders o
-  ON c.customer_id = o.customerID
-GROUP BY c.company_name
-ORDER BY cantidad_pedidos DESC;
-
-
-
-
-
-
-
-
+SELECT p.productName
+FROM categories AS c
+JOIN products AS p
+  ON c.categoryID = p.categoryID
+WHERE c.categoryName = 'Beverages';
 
 
 
