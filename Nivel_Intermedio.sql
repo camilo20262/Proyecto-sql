@@ -12,3 +12,22 @@ JOIN order_details AS od
   ON o.orderID = od.orderID
 GROUP BY c.employeeName
 ORDER BY ventas DESC;
+
+
+# 10. Producto Más Vendido
+#¿Cuál es el producto que más unidades se ha vendido en total?
+
+
+select p.productName,sum(o.quantity) as cantidad_vendidas
+from products as p
+join order_details as o
+on p.productID = o.productID
+group by 1
+order by cantidad_vendidas desc
+limit 1
+
+
+
+
+
+
