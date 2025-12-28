@@ -27,7 +27,12 @@ order by cantidad_vendidas desc
 limit 1
 
 
+#11. Clientes de un País Específico
+#¿Cuántos clientes tenemos en Estados Unidos? ¿Y en el Reino Unido?
 
+select count(*)AS UK,(SELECT COUNT(*) FROM customers where country ="USA")as USA
+from customers
+where country ="UK"
 
 
 
