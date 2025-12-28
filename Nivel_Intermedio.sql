@@ -54,4 +54,17 @@ from orders
 where shippedDate is null
 
 
+#14. Top 5 Clientes por Número de Órdenes
+#¿Cuáles son los 5 clientes que más órdenes han realizado?
+
+select c.contact_name,count(o.orderID) as ordenes
+from customers as c
+join orders as o
+on c.customer_id = o.customerID
+group by 1
+order by ordenes desc
+limit 5
+
+
+
 
