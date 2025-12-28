@@ -35,4 +35,15 @@ from customers
 where country ="UK"
 
 
+#12. Promedio de Precios por Categoría
+#¿Cuál es el precio promedio de los productos en cada categoría?
+SELECT c.categoryName,
+       ROUND(AVG(p.unitPrice), 2) AS precio_promedio
+FROM categories c
+JOIN products p
+  ON c.categoryID = p.categoryID
+GROUP BY c.categoryName
+ORDER BY precio_promedio DESC;
+
+
 
