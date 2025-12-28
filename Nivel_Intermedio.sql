@@ -66,5 +66,16 @@ order by ordenes desc
 limit 5
 
 
+#15. 15. Ingresos por Mes
+#¿Cuál fue el ingreso total (sin descontos) para cada mes? Compara 2013 vs 2014.
+
+
+select extract(YEAR FROM o.orderDate),extract(MONTH FROM o.orderDate),ROUND(SUM(od.unitPrice * od.quantity), 2) AS ingreso_total
+from orders as o
+join order_details as od
+on o.orderID = od.orderID
+group by extract(YEAR_MONTH FROM o.orderDate)
+ORDER BY extract(YEAR_MONTH FROM o.orderDate)
+
 
 
