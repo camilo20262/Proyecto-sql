@@ -78,4 +78,17 @@ group by extract(YEAR_MONTH FROM o.orderDate)
 ORDER BY extract(YEAR_MONTH FROM o.orderDate)
 
 
+#17. Empleados bajo Supervisión
+#¿Cuántos empleados tiene cada gerente? (Usa reportsTo para crear la jerarquía)
+
+SELECT 
+    j.employeeName AS gerente,
+    COUNT(e.employeeID) AS empleados_a_cargo
+FROM employees e
+JOIN employees j
+  ON e.reportsTo = j.employeeID
+GROUP BY j.employeeName
+ORDER BY empleados_a_cargo DESC;
+
+
 
