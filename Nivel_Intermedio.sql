@@ -46,4 +46,12 @@ GROUP BY c.categoryName
 ORDER BY precio_promedio DESC;
 
 
+#13. Órdenes sin Enviar
+#¿Cuántas órdenes han sido creadas pero aún no se han enviado (shippedDate es NULL)?
+
+select count(*)
+from orders 
+where shippedDate is null
+
+
 
