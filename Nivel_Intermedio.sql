@@ -91,4 +91,14 @@ GROUP BY j.employeeName
 ORDER BY empleados_a_cargo DESC;
 
 
+#18. Productos Bajo Stock
+#¿Cuáles son los productos que tienen menos de 20 unidades en stock? Ordena por cantidad ascendente.
+
+SELECT 
+  productID,
+  productName,
+  quantityPerUnit
+FROM products
+WHERE quantityPerUnit < 20
+ORDER BY quantityPerUnit ASC;
 
